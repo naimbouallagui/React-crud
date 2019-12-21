@@ -5,72 +5,95 @@ import React, { Component } from 'react';
 export default class Add extends Component {
     constructor(props) {
         super(props);
-        this.onChangePersonName = this.onChangePersonName.bind(this);
-        this.onChangePersonEmail = this.onChangePersonEmail.bind(this);
-        this.onChangePersonPassword = this.onChangePersonPassword.bind(this);
+        this.onChangeUserName = this.onChangeUserName.bind(this);
+        this.onChangeUserEmail = this.onChangeUserEmail.bind(this);
+        this.onChangeUserPassword = this.onChangeUserPassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
   
         this.state = {
-            person_name: '',
-            person_email: '',
-            person_password:''
+            user_name: '',
+            user_email: '',
+            user_password:''
         }
     }
-    onChangePersonName(e) {
+    onChangeUserName(e) {
       this.setState({
-        person_name: e.target.value
+        user_name: e.target.value
       });
     }
-    onChangePersonEmail(e) {
+    onChangeUserEmail(e) {
       this.setState({
-        person_email: e.target.value
+        user_email: e.target.value
       })  
     }
-    onChangePersonPassword(e) {
+    onChangeUserPassword(e) {
       this.setState({
-        person_password: e.target.value
+        user_password: e.target.value
       })
     }
   
-    onSubmit(e) {
+    onSubmit (e) {
       e.preventDefault();
-      console.log(`The values are ${this.state.person_name}, ${this.state.person_email}, and ${this.state.person_password}`)
+      const { user_name, user_email, user_password } = this.state;
+    //     localStorage.setItem('user_name', user_name);
+    //     localStorage.setItem('user_email', user_email);
+    //     localStorage.setItem('user_password', user_password);
+        console.log(`The values are ${this.state.user_name}, ${this.state.user_email}, and ${this.state.user_password}`)
+      let listUsers = JSON.parse(localStorage.getItem("users"));
+      let users = [];
+      if (listUsers == null) {
+        listUsers = [];
+      }
+    //   if (this.isMajorAge() && passwordTest()) {
+        users = {
+          id: Math.floor(Math.random() * 1000 + 1),
+          user_name: user_name,
+          user_email: user_email,
+          user_password: user_password,
+        };
+        listUsers.push(users);
+        localStorage.setItem("users", JSON.stringify(listUsers));
+       
+    // re-empty state after onSubmit()
       this.setState({
-        person_name: '',
-        person_email: '',
-        person_password: ''
+        user_name: '',
+        user_email: '',
+        user_password: ''
       })
     }
     render() {
         return (
             <div className="mt-4">
-                <h3>Add New Person</h3>
+                <h3>Add New User</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Add Person Name:  </label>
+                        <label>Add User Name:  </label>
                         <input 
-                        type="text" 
+                        type="text"
+                        name="user_name" 
                         className="form-control"
-                        value={this.state.person_name}
-                        onChange={this.onChangePersonName}
+                        value={this.state.user_name}
+                        onChange={this.onChangeUserName}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Add Person Email: </label>
+                        <label>Add User Email: </label>
                         <input 
                         type="text" 
+                        name="user_email"
                         className="form-control"
-                        value={this.state.person_email}
-                        onChange={this.onChangePersonEmail}
+                        value={this.state.user_email}
+                        onChange={this.onChangeUserEmail}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Add Person Password: </label>
+                        <label>Add User Password: </label>
                         <input 
                         type="text" 
+                        name="user_password"
                         className="form-control"
-                        value={this.state.person_password}
-                        onChange={this.onChangePersonPassword}
+                        value={this.state.user_password}
+                        onChange={this.onChangeUserPassword}
                         />
                     </div>
                     <div className="form-group">
